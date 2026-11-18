@@ -319,6 +319,11 @@ app.get("/anuncie", (req, res) => {
   res.send(vista.pagina({ ...vista.paginaAnuncie(), social: { url: site + "/anuncie", site } }));
 });
 
+app.get("/administracao", (req, res) => {
+  const site = enderecoDoSite(req);
+  res.send(vista.pagina({ ...vista.paginaAdministracao(), social: { url: site + "/administracao", site } }));
+});
+
 app.get("/privacidade", (req, res) => {
   const site = enderecoDoSite(req);
   res.send(vista.pagina({ ...vista.paginaPrivacidade(), social: { url: site + "/privacidade", site } }));
@@ -379,7 +384,7 @@ app.get("/sitemap.xml", async (req, res, proximo) => {
       quando ? `<lastmod>${new Date(quando).toISOString().slice(0, 10)}</lastmod>` : ""}</url>`;
     res.type("application/xml").send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${["/", "/alugar", "/comprar", "/anuncie", "/privacidade"].map((c) => url(c)).join("\n")}
+${["/", "/alugar", "/comprar", "/administracao", "/anuncie", "/privacidade"].map((c) => url(c)).join("\n")}
 ${rows.map((r) => url("/imovel/" + encodeURIComponent(r.codigo || r.id), r.atualizado_em)).join("\n")}
 </urlset>
 `);
