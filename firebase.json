@@ -1,0 +1,9 @@
+{
+  "hosting": {
+    "public": "hosting-vazio",
+    "ignore": ["**/.*"],
+    "rewrites": [
+      { "source": "**", "run": { "serviceId": "site-tripac", "region": "southamerica-east1" } }
+    ]
+  }
+}

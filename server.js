@@ -47,7 +47,10 @@ if (!process.env.SESSION_SECRET && producao) {
 }
 app.use(sessao({
   store: new LojaPg({ pool, tableName: "sessoes", createTableIfMissing: true }),
-  name: "tripac.sid",
+  // "__session": o Firebase Hosting (que serve o dominio tripacimoveis.com.br
+  // na frente do Cloud Run) apaga todo cookie com outro nome antes de repassar
+  // o pedido. Com outro nome, o login nunca ficaria de pe.
+  name: "__session",
   secret: process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex"),
   resave: false,
   saveUninitialized: false,
@@ -206,7 +209,8 @@ app.use((req, res, proximo) => {
   try { alvo = new URL(oficial); } catch { return proximo(); }
   const host = String(req.get("host") || "").toLowerCase();
   if (host === alvo.host || host.startsWith("localhost") || host.startsWith("127.0.0.1")) return proximo();
-  if (host === "www." + alvo.host || host.endsWith(".onrender.com")) {
+  if (host === "www." + alvo.host || host.endsWith(".onrender.com") ||
+      host.endsWith(".web.app") || host.endsWith(".firebaseapp.com")) {
     return res.redirect(301, oficial.replace(/\/+$/, "") + req.originalUrl);
   }
   proximo();
