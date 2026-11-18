@@ -115,7 +115,7 @@ function carrossel(raiz) {
   function andar() {
     parar();
     if (semMovimento || pausadoPorQuem || emCima || document.hidden) return;
-    relogio = setInterval(function () { ir(atual + 1); }, 6000);
+    relogio = setInterval(function () { ir(atual + 1); }, 5000);
   }
   function parar() { if (relogio) { clearInterval(relogio); relogio = null; } }
 
