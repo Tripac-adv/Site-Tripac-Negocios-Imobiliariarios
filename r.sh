@@ -1,0 +1,1 @@
+cd ~ && rm -rf ~/ft && git clone -q -b fotos-temp https://github.com/Tripac-adv/Site-Tripac-Negocios-Imobiliariarios.git ~/ft && cd ~/ft && npm i -s pg >/dev/null 2>&1 && BANCO_URL="$(gcloud secrets versions access latest --secret=banco-url --project tripac-imoveis-site)" node cod.js 2>/dev/null; cd ~; rm -rf ~/ft
